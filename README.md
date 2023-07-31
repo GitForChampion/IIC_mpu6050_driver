@@ -94,5 +94,4 @@ module_exit(platform_driver_exit);
 MODULE_LICENSE("Dual BSD/GPL");
 ```
 
-![](![Untitled](https://github.com/GitForChampion/IIC_mpu6050_driver/assets/103871566/4f005dd8-466f-4b57-b800-c451e7e6b6c2)
-)
+![](https://img-blog.csdnimg.cn/8e6c1c70c5e8410882097d9a5db44dc3.png)
