@@ -1,4 +1,4 @@
-# IIC_mpu6050_driver
+ # IIC_mpu6050_driver
 I2C总线二级外设驱动开发之设备树匹配
 
 ### MPU6050
@@ -93,3 +93,6 @@ module_init(platform_driver_init);
 module_exit(platform_driver_exit);
 MODULE_LICENSE("Dual BSD/GPL");
 ```
+
+![](![Untitled](https://github.com/GitForChampion/IIC_mpu6050_driver/assets/103871566/4f005dd8-466f-4b57-b800-c451e7e6b6c2)
+)
