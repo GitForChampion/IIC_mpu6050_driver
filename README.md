@@ -28,3 +28,68 @@ I2C总线二级外设驱动开发之设备树匹配
 #define PWR_MGMT_1  0x6B //电源管理，典型值：0x00(正常启用)
 ```
 
+# 设备树匹配
+设备树匹配：内核启动时根据设备树自动产生的设备 ------ 优先级最高
+
+注意事项：
+1. 无需编写device模块，只需编写driver模块
+2. 使用compatible属性进行匹配，注意设备树中compatible属性值不要包含空白字符
+3. id_table可不设置，但struct platform_driver成员driver的name成员必须设置
+
+```c
+/*platform driver框架*/
+#include <linux/module.h> 
+#include <linux/kernel.h>
+#include <linux/init.h>
+#include <linux/platform_device.h>
+
+static int driver_probe(struct platform_device *dev)
+{
+	printk("platform: match ok!\n");
+	return 0;
+}
+
+static int driver_remove(struct platform_device *dev)
+{
+	printk("platform: driver remove\n");
+	return 0;
+}
+
+struct platform_device_id testdrv_ids[] = 
+{
+		[0] = {.name = "test_device"},
+    [1] = {.name = "abcxyz"},
+    [2] = {}, //means ending
+};
+
+struct of_device_id test_of_ids[] = 
+{
+		[0] = {.compatible = "xyz,abc"},
+    [1] = {.compatible = "qwe,opq"},
+    [2] = {},
+};
+
+struct platform_driver test_driver = {
+	.probe = driver_probe,
+	.remove = driver_remove,
+	.driver = {
+	.name = "xxxxx", //必须初始化
+        .of_match_table = test_of_ids,
+	},
+};
+
+static int __init platform_driver_init(void)
+{
+	platform_driver_register(&test_driver);
+	return 0;
+}
+
+static void __exit platform_driver_exit(void)
+{
+	platform_driver_unregister(&test_driver);
+}
+
+module_init(platform_driver_init);
+module_exit(platform_driver_exit);
+MODULE_LICENSE("Dual BSD/GPL");
+```
